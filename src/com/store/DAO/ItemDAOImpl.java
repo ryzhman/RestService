@@ -9,21 +9,21 @@ import com.store.entities.Item;
 import com.store.entities.Shop;
 
 public class ItemDAOImpl implements ItemDAO {
-	private static List<Shop>shops1;
-	private  static List<Shop>shops2;
-	private  static List<Shop>shops3;
-	private  static Shop shop1;
-	private  static Shop shop2;
-	private  static Shop shop3;
+	private static List<Shop>shops1 = new ArrayList<>();
+	private  static List<Shop>shops2=new ArrayList<>();
+	private  static List<Shop>shops3= new ArrayList<>();
+	private  static Shop shop1=new Shop(1,4.55, 1);
+	private  static Shop shop2=new Shop(2,9.99, 2);
+	private  static Shop shop3=new Shop(3,6,0);
 	private static Map<Integer, Item> items;
 	private static List<Item> listOfItems;
-
+	
 	static{
 		items = new HashMap<>();
 		listOfItems = new ArrayList<>();
-		shop1=new Shop(1,4.55, 1);
-		shop2=new Shop(2,9.99, 2);
-		shop3=new Shop(3,6,0);
+//		shop1=new Shop(1,4.55, 1);
+//		shop2=new Shop(2,9.99, 2);
+//		shop3=new Shop(3,6,0);
 		shops1.add(shop1); 
 		shops1.add(shop2);
 		shops2.add(shop3); 
@@ -37,6 +37,7 @@ public class ItemDAOImpl implements ItemDAO {
 		items.put(2, new Item(2, "pen", shops2));
 		items.put(3, new Item(3, "ball", shops2));
 	}
+	
 	private static ItemDAOImpl itemDAOimpl;
 
 	public static ItemDAOImpl getInstance(){

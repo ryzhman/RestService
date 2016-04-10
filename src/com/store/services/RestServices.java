@@ -10,14 +10,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.store.DAO.ItemDAOImpl;
+import com.store.context.SpringApplicationContext;
 import com.store.entities.Item;
 
 //localhost:8080/Rest.api/rest/data
 //@RestController
 @Path("/data")
 public class RestServices {
-
-	public ItemDAOImpl itemDAO = ItemDAOImpl.getInstance();
+	
+	public ItemDAOImpl itemDAO = (ItemDAOImpl) SpringApplicationContext.getBean("ItemDAO");
 	
 	public RestServices(){}
 	

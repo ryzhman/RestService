@@ -10,6 +10,7 @@
 		<param-value>true</param-value>
 	</context-param> 
 	
+	<!-- Don't do it - it invokes no class found exception -->
 	<!-- <context-param>
 		<param-name>resteasy.resources</param-name>
 		<param-value>com.store.services.RestServices</param-value>
@@ -34,7 +35,22 @@
 		<servlet-name>resteasy-servlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
-
+	
+	
+	<!-- Spring configuration -->
+	<!-- Custom name for main spring configuration -->
+  <!--   <context-param>
+        <param-name>contextConfigLocation</param-name>
+       	<param-value>WebContent/WEB-INF/spring-context.xml</param-value>
+    </context-param> -->
+    
+    <!-- RESTEasy <-> Spring connector (RESTEasy can access Spring beans) -->
+    <listener>
+        <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener
+        </listener-class>
+    </listener>
+    
+	
 	<!-- In case of a use of jersey -->
 	<!-- <servlet> <servlet-name>jersey-serlvet</servlet-name> <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> 
 		<init-param> <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name> 
