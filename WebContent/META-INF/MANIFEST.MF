@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Class-Path: com.jersey.jersey-server,com.jersey.jersey-client,com.jersey.jersey-json
+Class-Path: com.store.services.RestServices
 

@@ -6,7 +6,7 @@ import com.store.entities.Item;
 
 public interface ItemDAO {
 	
-	public Item getById(int id);
+	public Item getById(Integer id);
 	
 	public List<Item> getAll();
 }

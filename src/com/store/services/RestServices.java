@@ -12,32 +12,31 @@ import javax.ws.rs.core.Response;
 import com.store.DAO.ItemDAOImpl;
 import com.store.entities.Item;
 
+//localhost:8080/Rest.api/rest/data
 //@RestController
 @Path("/data")
 public class RestServices {
-	public ItemDAOImpl itemDAO = new ItemDAOImpl();;
+
+	public ItemDAOImpl itemDAO = ItemDAOImpl.getInstance();
 	
-//	@RequestMapping(value = "/", method = RequestMethod.GET,headers="Accept=application/json")
-	@GET
-	@Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-	public String greeting(){
-		return "Hello in REST service!";
-	}
+	public RestServices(){}
 	
 //	@RequestMapping(value = "/items", method = RequestMethod.GET,headers="Accept=application/json")
 	@GET
 	@Path("/items")
     @Produces(MediaType.APPLICATION_JSON)
-	public /*List<Item>*/ Response getAllItems(){
+	public Response getAllItems(){
 //		return itemDAO.getAll();
 		List<Item> items = itemDAO.getAll();
-		return Response.ok(items).build();
+//		return items.size();
+		return Response.status(201).entity(items).build();
+//		return Response.ok(items.size()).build();
 	}
 
 //	@RequestMapping(value = "/item/{id}", method = RequestMethod.GET,headers="Accept=application/json")
+//	regex for checking int {id: \\d+}
 	@GET
-	@Path("{id: \\d+}")
+	@Path("/item/{id}")
     @Produces(MediaType.APPLICATION_JSON)
 	public /*Item*/ Response getItemById(/*@PathVariable */@PathParam("id") int id){
 //		return itemDAO.getById(id);
