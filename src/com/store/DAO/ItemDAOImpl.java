@@ -52,8 +52,7 @@ public class ItemDAOImpl implements ItemDAO {
 
 	@Override
 	public Item getById(Integer id) {
-		Item i = new Item(1, "hand", null);
-//		Item i = items.get(id);
+		Item i = items.get(id);
 		return i;
 	}
 

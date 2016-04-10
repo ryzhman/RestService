@@ -1,5 +1,6 @@
 package com.store.services;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -9,6 +10,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.store.DAO.ItemDAOImpl;
 import com.store.context.SpringApplicationContext;
 import com.store.entities.Item;
@@ -17,9 +22,9 @@ import com.store.entities.Item;
 //@RestController
 @Path("/data")
 public class RestServices {
-	
 	public ItemDAOImpl itemDAO = (ItemDAOImpl) SpringApplicationContext.getBean("ItemDAO");
-	
+	public ObjectMapper mapper;
+
 	public RestServices(){}
 	
 //	@RequestMapping(value = "/items", method = RequestMethod.GET,headers="Accept=application/json")
@@ -27,11 +32,19 @@ public class RestServices {
 	@Path("/items")
     @Produces(MediaType.APPLICATION_JSON)
 	public Response getAllItems(){
-//		return itemDAO.getAll();
-		List<Item> items = itemDAO.getAll();
-//		return items.size();
-		return Response.status(201).entity(items).build();
-//		return Response.ok(items.size()).build();
+		try{
+			String representation;
+			List<Item> items = itemDAO.getAll();
+			mapper = new ObjectMapper();
+			representation = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(items);
+			return Response.status(201).entity(representation).build();
+		}catch(JsonGenerationException|JsonMappingException e){
+			e.getMessage();
+			return Response.status(500).entity("error during formatting").build();
+		}catch(IOException e){
+			e.getMessage();
+			return Response.status(500).entity("error during formatting").build();
+		}
 	}
 
 //	@RequestMapping(value = "/item/{id}", method = RequestMethod.GET,headers="Accept=application/json")
@@ -40,9 +53,19 @@ public class RestServices {
 	@Path("/item/{id}")
     @Produces(MediaType.APPLICATION_JSON)
 	public /*Item*/ Response getItemById(/*@PathVariable */@PathParam("id") int id){
-//		return itemDAO.getById(id);
-		Item item = itemDAO.getById(id);
-		return Response.ok(item).build();
+		try{
+			String representation;
+			Item item = itemDAO.getById(id);
+			mapper = new ObjectMapper();
+			representation = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(item);
+			return Response.status(201).entity(representation).build();
+		}catch(JsonGenerationException|JsonMappingException e){
+			e.getMessage();
+			return Response.status(500).entity("error during formatting").build();
+		}catch(IOException e){
+			e.getMessage();
+			return Response.status(500).entity("error during formatting").build();
+		}
 	}
 
 }
