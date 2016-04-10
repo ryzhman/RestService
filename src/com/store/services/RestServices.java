@@ -37,21 +37,21 @@ public class RestServices {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getArrangedItem( 
-			@QueryParam("mpn") String mpn, 
-			/*@DefaultValue("0") */@QueryParam("{availibility: [0-2]}") /*@Pattern("[0-2]", message = "The sort ID must be a valid number")*/ int availability, 
-			/*@DefaultValue("0") */@QueryParam("{pricesort: [0-2]}") /*@Pattern(regexp="", message = "The sort ID must be a valid number" Internationalization may be added)*/ int pricesort) 
-					throws NotFoundException{
-//	public Response getArrangedItem(@Context UriInfo info)throws NotFoundException{
-//		try{
-			/*String mpn = info.getQueryParameters().getFirst("mpn").trim();
+//	public Response getArrangedItem( 
+			/*@QueryParam("mpn") String mpn, 
+			@DefaultValue("0") @QueryParam("{availibility: [0-2]}") @Pattern("[0-2]", message = "The sort ID must be a valid number") int availability, 
+			@DefaultValue("0") @QueryParam("{pricesort: [0-2]}") @Pattern(regexp="", message = "The sort ID must be a valid number" Internationalization may be added) int pricesort) 
+					throws NotFoundException{*/
+	public Response getArrangedItem(@Context UriInfo info)throws NotFoundException{
+		try{
+			String mpn = info.getQueryParameters().getFirst("mpn").trim();
 			String availabilitySTR = info.getQueryParameters().getFirst("availability");
 			int availability = Integer.parseInt(availabilitySTR);
 			if(availability!=0&&availability!=1&&availability!=2) availability=0;
 			String pricesortSRT = info.getQueryParameters().getFirst("pricesort");
 			int pricesort = Integer.parseInt(pricesortSRT);
 			if(pricesort!=0&&pricesort!=1&&pricesort!=2) pricesort=0;
-*/		try{
+//		try{
 			String representation;
 			Item item = itemDAO.getArrangedItem(mpn, availability, pricesort);
 			mapper = new ObjectMapper();
@@ -63,7 +63,7 @@ public class RestServices {
                     .build());
 		}catch(NumberFormatException e){
 				throw new BadRequestException(Response.status(Status.BAD_REQUEST)
-	                    .entity("Couldn't find a good with mpn: " + e.getMessage())
+	                    .entity("Numeric parameter must be a valid number: " + e.getMessage())
 	                    .build());
 		}catch(IOException e){
 			throw new NotFoundException(Response.status(Status.BAD_REQUEST)
@@ -74,8 +74,6 @@ public class RestServices {
 //		return Response.status(200).entity(mpn + ", " + availability + ", " + pricesort).build();
 	}
 
-//	@RequestMapping(value = "/item/{id}", method = RequestMethod.GET,headers="Accept=application/json")
-//	regex for checking int {id: \\d+}
 	@GET
 	@Path("/item/{id : \\d+}")
     @Produces(MediaType.APPLICATION_JSON)

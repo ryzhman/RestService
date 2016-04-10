@@ -66,11 +66,10 @@ public class ItemDAOImpl implements ItemDAO {
 		List<Item> listOfItems = getAll();
 		Item item = new Item();
 		for(Item e: listOfItems){
-			if(e.getMpn()==mpn){
+			if(e.getMpn().equals(mpn)){
 				item.setMpn(mpn);
 				item.setId(e.getId());
 				item.setShops(e.getShops());
-				break;
 			};
 		}
 		List<Shop> shopList = item.getShops();
