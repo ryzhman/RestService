@@ -5,10 +5,10 @@
 	<display-name>Restful Web Application</display-name>
 
 	<!-- Auto scan rest service for restEasy -->
- 	<context-param>
+  	<context-param>
 		<param-name>resteasy.scan</param-name>
 		<param-value>true</param-value>
-	</context-param> 
+	</context-param>  
 	
 	<!-- Don't do it - it invokes no class found exception -->
 	<!-- <context-param>
@@ -34,17 +34,15 @@
 	<servlet-mapping>
 		<servlet-name>resteasy-servlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> 
 	
 	
 	<!-- Spring configuration -->
 	<!-- Custom name for main spring configuration -->
-    <context-param>
+  <!--   <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>
-            classpath:spring-context.xml
-        </param-value>
-    </context-param>
+       	<param-value>WebContent/WEB-INF/spring-context.xml</param-value>
+    </context-param> -->
     
     <!-- RESTEasy <-> Spring connector (RESTEasy can access Spring beans) -->
     <listener>

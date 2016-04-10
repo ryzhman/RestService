@@ -1,12 +1,14 @@
 package com.store.DAO;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.store.entities.Item;
 import com.store.entities.Shop;
+import com.store.server.RedisServerController;
 
 public class ItemDAOImpl implements ItemDAO {
 	private static List<Shop>shops1 = new ArrayList<>();
@@ -21,9 +23,6 @@ public class ItemDAOImpl implements ItemDAO {
 	static{
 		items = new HashMap<>();
 		listOfItems = new ArrayList<>();
-//		shop1=new Shop(1,4.55, 1);
-//		shop2=new Shop(2,9.99, 2);
-//		shop3=new Shop(3,6,0);
 		shops1.add(shop1); 
 		shops1.add(shop2);
 		shops2.add(shop3); 
@@ -61,61 +60,65 @@ public class ItemDAOImpl implements ItemDAO {
 		List<Item> listOfItems = new ArrayList<>(items.values());
 		return listOfItems;
 	}
+	
+	@Override
+	public Item getArrangedItem(String mpn, int availability, int sortBy){
+		List<Item> listOfItems = getAll();
+		Item item = new Item();
+		for(Item e: listOfItems){
+			if(e.getMpn()==mpn){
+				item.setMpn(mpn);
+				item.setId(e.getId());
+				item.setShops(e.getShops());
+				break;
+			};
+		}
+		List<Shop> shopList = item.getShops();
+		List<Shop> sortedList = new ArrayList<>();
+		switch(availability){
+			case 0: {
+				break;
+			}
+			case 1:{
+				for(Shop e: shopList){
+					if(e.getStock()==1&&e.getStock()==2){
+						sortedList.add(e);
+					}
+				}
+				break;
+			}
+			case 2:{
+				for(Shop e: shopList){
+					if(e.getStock()==2){
+						sortedList.add(e);
+					}
+				}
+				break;
+			}
+		}
+		switch(sortBy){
+			case 0:{
+				break;
+			}
+			case 1:{
+				Collections.sort(sortedList, Shop.AscComparator);
+				break;
+			}
+			case 2:{
+				Collections.sort(sortedList, Shop.DescComparator);
+				break;
+			}
+		}
+		item.setShops(sortedList);
+		return item;
+	}
 
 	public Map<Integer, Item> getItems() {
 		return items;
 	}
-
-	/*public void setItems(Map<Integer, Item> items) {
-		this.items = items;
+	
+	public void createDB(){
+		RedisServerController.startServer();
 	}
-
-	public  List<Shop> getShops1() {
-		return shops1;
-	}
-
-	public  List<Shop> getShops2() {
-		return shops2;
-	}
-
-	public  List<Shop> getShops3() {
-		return shops3;
-	}
-
-	public  Shop getShop1() {
-		return shop1;
-	}
-
-	public  Shop getShop2() {
-		return shop2;
-	}
-
-	public  Shop getShop3() {
-		return shop3;
-	}
-
-	public  void setShops1(List<Shop> shops1) {
-		this.shops1 = shops1;
-	}
-
-	public  void setShops2(List<Shop> shops2) {
-		this.shops2 = shops2;
-	}
-
-	public  void setShops3(List<Shop> shops3) {
-		this.shops3 = shops3;
-	}
-
-	public  void setShop1(Shop shop1) {
-		this.shop1 = shop1;
-	}
-
-	public  void setShop2(Shop shop2) {
-		this.shop2 = shop2;
-	}
-
-	public  void setShop3(Shop shop3) {
-		this.shop3 = shop3;
-	}*/
 
 }
