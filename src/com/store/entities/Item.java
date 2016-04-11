@@ -59,6 +59,7 @@ public class Item {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
+		result = prime * result + ((mpn == null) ? 0 : mpn.hashCode());
 		return result;
 	}
 	@Override
@@ -71,6 +72,11 @@ public class Item {
 			return false;
 		Item other = (Item) obj;
 		if (id != other.id)
+			return false;
+		if (mpn == null) {
+			if (other.mpn != null)
+				return false;
+		} else if (!mpn.equals(other.mpn))
 			return false;
 		return true;
 	}

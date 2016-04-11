@@ -20,7 +20,7 @@ public class ItemDAOImpl implements ItemDAO {
 //	private static Map<String, String> itemsData;
 //	private static Map<String, String> shopsData;
 	
-//	Initialisation of DB alternative - List<Item>listOfItems, which includes all the data about item, including List<Shop>
+//	Initialisation of DB alternative - Map<Integer, Item>items, which includes all the data about item, including List<Shop>
 	static{
 		items = new HashMap<>();
 		listOfItems = new ArrayList<>();
@@ -49,10 +49,10 @@ public class ItemDAOImpl implements ItemDAO {
 
 		listOfItems.add(new Item(1, "hand", shops1));
 		listOfItems.add(new Item(2, "pen", shops2));
-		listOfItems.add(new Item(3, "ball", shops2));
+		listOfItems.add(new Item(3, "ball", shops3));
 		items.put(1, new Item(1, "hand", shops1));
 		items.put(2, new Item(2, "pen", shops2));
-		items.put(3, new Item(3, "ball", shops2));
+		items.put(3, new Item(3, "ball", shops3));
 	}
 
 	public static ItemDAOImpl getInstance(){
@@ -64,7 +64,7 @@ public class ItemDAOImpl implements ItemDAO {
 
 	public ItemDAOImpl(){
 	}
-
+	
 	@Override
 	public Item getById(Integer id) {
 		Item i = items.get(id);
