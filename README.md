@@ -1,5 +1,4 @@
-[![Circle CI](https://circleci.com/gh/ryzhman/RestService.svg?style=svg)](https://circleci.com/gh/ryzhman/Greeting)
-
+[![Circle CI](https://circleci.com/gh/ryzhman/RestService.svg?style=svg)](https://circleci.com/gh/ryzhman/RestService)
 # RestService
 
 REST Service provides customer with service that processes http-request including multiple parameters and utilise them as arguments for getting info from storage. 
