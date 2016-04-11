@@ -1,4 +1,4 @@
-[![Circle CI](https://circleci.com/gh/ryzhman/Greeting.svg?style=svg)](https://circleci.com/gh/ryzhman/Greeting)
+[![Circle CI](https://circleci.com/gh/ryzhman/RestService.svg?style=svg)](https://circleci.com/gh/ryzhman/Greeting)
 
 # RestService
 
