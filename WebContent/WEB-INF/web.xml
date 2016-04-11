@@ -3,6 +3,11 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 	<display-name>Restful Web Application</display-name>
+	
+	<welcome-file-list>
+	    <welcome-file>Hello.jsp</welcome-file>
+	</welcome-file-list>
+	
 
 	<!-- Auto scan rest service for restEasy -->
   	<context-param>
@@ -18,7 +23,7 @@
 	
 	<context-param>
 		<param-name>resteasy.servlet.mapping.prefix</param-name>
-		<param-value>/rest</param-value>
+		<param-value>/</param-value>
 	</context-param>
 	<listener>
 		<listener-class>
@@ -33,7 +38,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>resteasy-servlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping> 
 	
 	

@@ -2,9 +2,20 @@ package com.store.entities;
 
 import java.util.Comparator;
 
+import redis.clients.johm.Attribute;
+import redis.clients.johm.Id;
+import redis.clients.johm.Indexed;
+import redis.clients.johm.Model;
+
+@Model
 public class Shop {
+	@Id
 	private int id;
+	@Attribute
+    @Indexed
 	private double price;
+	@Attribute
+    @Indexed
 	private int stock;
 	
 	public Shop(){}

@@ -12,6 +12,5 @@ public interface ItemDAO {
 	
 	public Item getArrangedItem(String mpn, int availability, int sortBy);
 	
-	public void createDB();
 
 }

@@ -3,13 +3,11 @@ package com.store.services;
 import java.io.IOException;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -24,7 +22,7 @@ import com.store.DAO.ItemDAOImpl;
 import com.store.context.SpringApplicationContext;
 import com.store.entities.Item;
 
-//http://localhost:8080/Rest.api/rest/getprice?mpn=hand&availability=0&pricesort=1
+//http://localhost:8080/Rest.api/getprice?mpn=ball&availability=1&pricesort=0
 
 @Path("/getprice")
 public class RestServices {
@@ -51,7 +49,6 @@ public class RestServices {
 			String pricesortSRT = info.getQueryParameters().getFirst("pricesort");
 			int pricesort = Integer.parseInt(pricesortSRT);
 			if(pricesort!=0&&pricesort!=1&&pricesort!=2) pricesort=0;
-//		try{
 			String representation;
 			Item item = itemDAO.getArrangedItem(mpn, availability, pricesort);
 			mapper = new ObjectMapper();
@@ -65,14 +62,31 @@ public class RestServices {
 				throw new BadRequestException(Response.status(Status.BAD_REQUEST)
 	                    .entity("Numeric parameter must be a valid number: " + e.getMessage())
 	                    .build());
+		}catch(NullPointerException e){
+			throw new BadRequestException(Response.status(Status.BAD_REQUEST)
+                    .entity("MPN parameter requiered: " + e.getMessage())
+                    .build());
 		}catch(IOException e){
 			throw new NotFoundException(Response.status(Status.BAD_REQUEST)
                     .entity("Couldn't find a good with mpn: " + e.getMessage())
                     .build());		
 		}
-		
-//		return Response.status(200).entity(mpn + ", " + availability + ", " + pricesort).build();
 	}
+	
+	@GET
+	@Path("/hello")
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response helloPage(){
+		try{
+			return Response.status(200).entity("Hello on REST Service").build();
+		}catch(NotFoundException e){
+			throw new NotFoundException(Response.status(Status.NOT_FOUND)
+                    .entity("This URL is not valid: " + e.getMessage())
+                    .build());	
+		}
+		
+	}
+	
 
 	@GET
 	@Path("/item/{id : \\d+}")
